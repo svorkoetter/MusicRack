@@ -28,7 +28,7 @@
 #include "error.h"
 
 /* Don't use the proper sRGB gamma correction (nor simple x^2.2 either), as it
-   makes lines to light in the output when scaling music. Uncomment the line
+   makes lines too light in the output when scaling music. Uncomment the line
    below to use the proper formula. */
 // #define USE_SRGB_GAMMA
 
