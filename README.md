@@ -163,6 +163,6 @@ An annotation can be removed by selecting Remove from the popup menu.
 The original intention was to include support for manipulating MusicRack with
 GPIO inputs on the Raspberry Pi, to make it easy to connect dedicated page
 turning buttons or foot pedals for example. For various reasons, this proved
-troublesome, and it was decided to write a separate GPIO-to-Keypress utility
-(<../GPIOKey>) that is independent of MusicRack (and thus usable with other
-applications too).
+troublesome, and it was decided to write a separate GPIO-to-Keypress utility,
+<https://github.com/svorkoetter/GPIOKey>, that is independent of MusicRack
+(and thus usable with other applications too).
