@@ -1,0 +1,209 @@
+object MainForm: TMainForm
+  Left = 965
+  Height = 392
+  Top = 259
+  Width = 322
+  Caption = 'Music Rack'
+  ClientHeight = 392
+  ClientWidth = 322
+  Color = clWhite
+  OnActivate = FormActivate
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnKeyDown = FormKeyDown
+  OnMouseDown = FormMouseDown
+  OnMouseUp = FormMouseUp
+  OnResize = FormResize
+  PopupMenu = FormCommandMenu
+  LCLVersion = '1.7'
+  Visible = False
+  WindowState = wsFullScreen
+  object LeftFiller: TImage
+    Left = 0
+    Height = 316
+    Top = 0
+    Width = 16
+    OnMouseDown = FormMouseDown
+    OnMouseUp = FormMouseUp
+  end
+  object LeftImage: TImage
+    Left = 16
+    Height = 203
+    Top = 0
+    Width = 137
+    OnDragDrop = ImageDragDrop
+    OnDragOver = ImageDragOver
+    OnMouseDown = FormMouseDown
+    OnMouseUp = FormMouseUp
+  end
+  object MiddleFiller: TImage
+    Left = 153
+    Height = 203
+    Top = 0
+    Width = 16
+    OnMouseDown = FormMouseDown
+    OnMouseUp = FormMouseUp
+  end
+  object RightImage: TImage
+    Left = 169
+    Height = 203
+    Top = 0
+    Width = 137
+    OnDragDrop = ImageDragDrop
+    OnDragOver = ImageDragOver
+    OnMouseDown = FormMouseDown
+    OnMouseUp = FormMouseUp
+  end
+  object RightFiller: TImage
+    Left = 306
+    Height = 316
+    Top = 0
+    Width = 16
+    OnMouseDown = FormMouseDown
+    OnMouseUp = FormMouseUp
+  end
+  object ProgressLabel: TLabel
+    Left = 104
+    Height = 18
+    Top = 212
+    Width = 108
+    Alignment = taCenter
+    Caption = 'Progress Label'
+    Color = clGray
+    Font.Color = clWhite
+    Font.Height = -16
+    ParentColor = False
+    ParentFont = False
+    Transparent = False
+    Visible = False
+  end
+  object EditMemo: TMemo
+    Left = 200
+    Height = 66
+    Top = 240
+    Width = 95
+    Lines.Strings = (
+      'EditMemo'
+    )
+    OnKeyDown = EditMemoKeyDown
+    TabOrder = 0
+    WantTabs = True
+  end
+  object FormCommandMenu: TPopupMenu
+    left = 64
+    top = 328
+    object OpenMenuItem: TMenuItem
+      Caption = '&Open'
+      OnClick = OpenMenuItemClick
+    end
+    object Separator1: TMenuItem
+      Caption = '-'
+    end
+    object QuitMenuItem: TMenuItem
+      Caption = '&Quit'
+      OnClick = QuitMenuItemClick
+    end
+  end
+  object AnnotationCommandMenu: TPopupMenu
+    OnPopup = AnnotationCommandMenuPopup
+    left = 224
+    top = 328
+    object StyleMenuItem: TMenuItem
+      Caption = '&Style ...'
+      object BoldMenuItem: TMenuItem
+        Caption = '&Bold'
+        OnClick = BoldMenuItemClick
+      end
+      object ItalicMenuItem: TMenuItem
+        Caption = '&Italic'
+        OnClick = ItalicMenuItemClick
+      end
+      object UnderlineMenuItem: TMenuItem
+        Caption = '&Underline'
+        OnClick = UnderlineMenuItemClick
+      end
+      object StrikeoutMenuItem: TMenuItem
+        Caption = '&Strikethrough'
+        OnClick = StrikeoutMenuItemClick
+      end
+    end
+    object ColorMenuItem: TMenuItem
+      Caption = '&Color ...'
+      object BlackMenuItem: TMenuItem
+        Caption = '&Black'
+        OnClick = BlackMenuItemClick
+      end
+      object RedMenuItem: TMenuItem
+        Caption = '&Red'
+        OnClick = RedMenuItemClick
+      end
+      object GreenMenuItem: TMenuItem
+        Caption = '&Green'
+        OnClick = GreenMenuItemClick
+      end
+      object BlueMenuItem: TMenuItem
+        Caption = '&Blue'
+        OnClick = BlueMenuItemClick
+      end
+      object GrayMenuItem: TMenuItem
+        Caption = '&Gray'
+        OnClick = GrayMenuItemClick
+      end
+      object HighlightMenuItem: TMenuItem
+        Caption = '&Highlight'
+        OnClick = HighlightMenuItemClick
+      end
+    end
+    object SizeMenuItem: TMenuItem
+      Caption = 'Si&ze ...'
+      object SmallMenuItem: TMenuItem
+        Caption = '&Small'
+        OnClick = SmallMenuItemClick
+      end
+      object MediumMenuItem: TMenuItem
+        Caption = '&Medium'
+        OnClick = MediumMenuItemClick
+      end
+      object LargeMenuItem: TMenuItem
+        Caption = '&Large'
+        OnClick = LargeMenuItemClick
+      end
+      object SubtitleMenuItem: TMenuItem
+        Caption = 'S&ubtitle'
+        OnClick = SubtitleMenuItemClick
+      end
+      object TitleMenuItem: TMenuItem
+        Caption = '&Title'
+        OnClick = TitleMenuItemClick
+      end
+    end
+    object Separator4: TMenuItem
+      Caption = '-'
+    end
+    object RemoveMenuItem: TMenuItem
+      Caption = '&Remove'
+      OnClick = RemoveMenuItemClick
+    end
+    object Separator2: TMenuItem
+      Caption = '-'
+    end
+    object OpenMenuItem1: TMenuItem
+      Caption = '&Open'
+      OnClick = OpenMenuItemClick
+    end
+    object Separator3: TMenuItem
+      Caption = '-'
+    end
+    object QuitMenuItem1: TMenuItem
+      Caption = '&Quit'
+      OnClick = QuitMenuItemClick
+    end
+  end
+  object GPIOScanTimer: TTimer
+    Enabled = False
+    Interval = 50
+    OnTimer = GPIOScanTimerTimer
+    left = 64
+    top = 256
+  end
+end

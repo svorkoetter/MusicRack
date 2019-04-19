@@ -1,0 +1,102 @@
+object OpenForm: TOpenForm
+  Left = 0
+  Height = 400
+  Top = 0
+  Width = 600
+  BorderStyle = bsDialog
+  Caption = 'Open Score'
+  ClientHeight = 400
+  ClientWidth = 600
+  Color = clSilver
+  OnCreate = FormCreate
+  OnShow = FormShow
+  Position = poMainFormCenter
+  LCLVersion = '1.7'
+  Visible = False
+  object MRUHeading: TLabel
+    Left = 0
+    Height = 15
+    Top = 5
+    Width = 300
+    Alignment = taCenter
+    AutoSize = False
+    Caption = '&Recently Opened'
+    FocusControl = MRUListBox
+    ParentColor = False
+  end
+  object MRUListBox: TListBox
+    Left = 0
+    Height = 325
+    Top = 25
+    Width = 300
+    ClickOnSelChange = False
+    ExtendedSelect = False
+    IntegralHeight = True
+    ItemHeight = 0
+    OnDblClick = OpenButtonClick
+    OnEnter = MRUListBoxEnter
+    OnKeyDown = MRUListBoxKeyDown
+    OnSelectionChange = MRUListBoxSelectionChange
+    ScrollWidth = 298
+    TabOrder = 0
+    TopIndex = -1
+  end
+  object ScoreHeading: TLabel
+    Left = 300
+    Height = 15
+    Top = 5
+    Width = 300
+    Alignment = taCenter
+    AutoSize = False
+    Caption = 'Complete &Index'
+    FocusControl = ScoreListBox
+    ParentColor = False
+  end
+  object ScoreListBox: TListBox
+    Left = 300
+    Height = 325
+    Top = 25
+    Width = 300
+    ClickOnSelChange = False
+    ExtendedSelect = False
+    IntegralHeight = True
+    ItemHeight = 0
+    OnDblClick = OpenButtonClick
+    OnEnter = ScoreListBoxEnter
+    OnKeyDown = ScoreListBoxKeyDown
+    OnSelectionChange = ScoreListBoxSelectionChange
+    ScrollWidth = 298
+    TabOrder = 1
+    TopIndex = -1
+  end
+  object ButtonPanel: TPanel
+    Left = 0
+    Height = 50
+    Top = 350
+    Width = 600
+    Align = alBottom
+    ClientHeight = 50
+    ClientWidth = 600
+    TabOrder = 2
+    object OpenButton: TButton
+      Left = 200
+      Height = 25
+      Top = 13
+      Width = 75
+      Caption = '&Open'
+      ModalResult = 1
+      OnClick = OpenButtonClick
+      TabOrder = 0
+    end
+    object CancelButton: TButton
+      Left = 325
+      Height = 25
+      Top = 13
+      Width = 75
+      Cancel = True
+      Caption = '&Cancel'
+      ModalResult = 2
+      TabOrder = 1
+    end
+  end
+end
