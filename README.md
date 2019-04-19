@@ -16,12 +16,13 @@ settings dialog, and no configuration file.
 MusicRack is intended to work on a widescreen (e.g. 16:10 or 16:9) monitor,
 displaying two pages at once.
 
-MusicRack uses the following libraries, or newer versions thereof:
+MusicRack uses the following libraries and utilities, or newer versions thereof:
 
 * libjpeg
 * libpng12-0
 * libtiff5
 * zlib1g
+* GhostScript 9.26
 
 If you are building MusicRack from source, you will need the following tools
 and libraries, or newer versions thereof:
