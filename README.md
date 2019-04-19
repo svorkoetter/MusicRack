@@ -16,8 +16,7 @@ settings dialog, and no configuration file.
 MusicRack is intended to work on a widescreen (e.g. 16:10 or 16:9) monitor,
 displaying two pages at once.
 
-On Linux and OS/X systems, the following libraries, or newer versions thereof,
-need to be present:
+MusicRack uses the following libraries, or newer versions thereof:
 
 * libjpeg
 * libpng12-0
