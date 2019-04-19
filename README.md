@@ -152,7 +152,7 @@ display a popup menu of formatting options:
 * Color: any one of black, red, green, blue, gray, or highlight
 * Size: any one of small, medium, large, subtitle, or title
 
-![Formatting and removal options on the popup menu](doc/format.png)
+![Formatting and removal options on the popup menu](DocImg/format.png)
 
 The selected formatting applies to the entire annotation. There is no facility
 for individually formatting words therein.
