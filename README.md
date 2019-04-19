@@ -1,11 +1,10 @@
 # MusicRack - A Digital Sheet Music Display System
 
-MusicRack is a simple yet flexible digital sheet music display system for Linux
-(including Raspbian on the Raspberry Pi platform), Mac OS/X, and Windows
-computers. The main application is implemented in Lazarus/FreePascal, and the
-image processing engine used to prepare music for display is written in C.
-MusicRack is distributed as source code under the terms of the GNU General
-Public License.
+MusicRack is a simple yet flexible digital sheet music display system developed
+for the Raspberry Pi, which can also be built on other Linux systems, and
+probably Mac and Windows too. The main application is implemented in
+Lazarus/FreePascal, and the image processing engine used to prepare music for
+display is written in C.
 
 ![MusicRack running on a Raspberry Pi on top of a Hammond organ](DocImg/photo.jpg)
 
