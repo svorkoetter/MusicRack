@@ -144,14 +144,7 @@ static uint16_t *scaleRecursive( uint16_t *img, int w, int h, int w2, int h2,
 	   rest of the way in a single step. */
 	int wt = w * stepX, ht = h * stepY;
 	img = scaleRecursive(img,w,h,wt,ht,minStep+MIN_STEP_FUDGE);
-
-	/* Compute the new scale factors to get the rest of the way. We can't
-	   just use (scaleX,scaleY)^(1/steps) because rounding error might
-	   produce a final image that isn't exactly the size wanted. */
 	w = wt; h = ht;
-	scaleX = (double) w2 / (double) w;
-	scaleY = (double) h2 / (double) h;
-	scaleXY = sqrt(scaleX * scaleY);
     }
 
     uint16_t *res = (uint16_t *) malloc(h2 * w2 * sizeof(uint16_t));

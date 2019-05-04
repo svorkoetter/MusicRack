@@ -111,18 +111,16 @@ static void horizontalShear( uint16_t *img, int w, int h, double slope )
 
     memset(rowBuf,255,rowBufLen*sizeof(uint16_t));
 
-    double dx = slope < 0 ? offset / 2.0 : -offset / 2.0;
+    double dx = -0.5 * (h - 1) * slope;
     for( int r = 0; r < h; ++r ) {
 	int wt1 = (int) (256 * (ceil(dx) - dx));
 	int wt2 = 256 - wt1;
 
 	memcpy(rbp,img,w*sizeof(uint16_t));
 
-	uint16_t *ip = rbp + (int) dx;
-	for( int c = 0; c < w; ++c ) {
-	    *img++ = (ip[0] * wt1 + ip[1] * wt2) / 256;
-	    ++ip;
-	}
+	uint16_t *ip = rbp + (int) floor(dx);
+	for( int c = 0; c < w; ++c )
+	    *img++ = (ip[c] * wt1 + ip[c+1] * wt2) / 256;
 	dx += slope;
     }
 
@@ -142,7 +140,7 @@ static void verticalShear( uint16_t *img, int w, int h, double slope )
 
     memset(colBuf,255,colBufLen*sizeof(uint16_t));
 
-    double dy = slope < 0 ? offset / 2.0 : -offset / 2.0;
+    double dy = -0.5 * (w - 1) * slope;
     for( int c = 0; c < w; ++c ) {
 	int wt1 = (int) (256 * (ceil(dy) - dy));
 	int wt2 = 256 - wt1;
@@ -153,11 +151,10 @@ static void verticalShear( uint16_t *img, int w, int h, double slope )
 	    cp += w;
 	}
 
-	uint16_t *ip = cbp + (int) dy;
+	uint16_t *ip = cbp + (int) floor(dy);
 	cp = img + c;
 	for( int r = 0; r < h; ++r ) {
-	    *cp = (ip[0] * wt1 + ip[1] * wt2) / 256;
-	    ++ip;
+	    *cp = (ip[r] * wt1 + ip[r+1] * wt2) / 256;
 	    cp += w;
 	}
 	dy += slope;
