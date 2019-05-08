@@ -101,7 +101,7 @@ int EstimateSkew( uint8_t *med1, uint8_t *med2, int h, int max )
 
 static void horizontalShear( uint16_t *img, int w, int h, double slope )
 {
-    int offset = (int) ceil(fabs(h * slope)) + 2;
+    int offset = (int) ceil(fabs(0.5 * h * slope)) + 2;
 
     size_t rowBufLen = w + 2 * offset;
     uint16_t *rowBuf = (uint16_t *) malloc(rowBufLen * sizeof(uint16_t));
@@ -113,8 +113,8 @@ static void horizontalShear( uint16_t *img, int w, int h, double slope )
 
     double dx = -0.5 * (h - 1) * slope;
     for( int r = 0; r < h; ++r ) {
-	int wt1 = (int) (256 * (ceil(dx) - dx));
-	int wt2 = 256 - wt1;
+	int wt2 = (int) (256 * (dx - floor(dx)));
+	int wt1 = 256 - wt2;
 
 	memcpy(rbp,img,w*sizeof(uint16_t));
 
@@ -129,7 +129,7 @@ static void horizontalShear( uint16_t *img, int w, int h, double slope )
 
 static void verticalShear( uint16_t *img, int w, int h, double slope )
 {
-    int offset = (int) ceil(fabs(w * slope)) + 2;
+    int offset = (int) ceil(fabs(0.5 * w * slope)) + 2;
 
     size_t colBufLen = h + 2 * offset;
 
@@ -142,8 +142,8 @@ static void verticalShear( uint16_t *img, int w, int h, double slope )
 
     double dy = -0.5 * (w - 1) * slope;
     for( int c = 0; c < w; ++c ) {
-	int wt1 = (int) (256 * (ceil(dy) - dy));
-	int wt2 = 256 - wt1;
+	int wt2 = (int) (256 * (dy - floor(dy)));
+	int wt1 = 256 - wt2;
 
 	uint16_t *cp = img + c;
 	for( int r = 0; r < h; ++r ) {
