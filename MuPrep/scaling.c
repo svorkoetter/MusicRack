@@ -49,7 +49,7 @@ static double R( double x )
     return( rx * 0.666666666666667 );
 }
 
-static void scale( int w, int h, int w2, int h2, uint16_t *dp, uint16_t *dp2 )
+static void scale( int w, int h, int w2, int h2, uint16_t *dp, uint16_t *dpout )
 {
     /* Compute the scaling factors so that only source pixels actually within
        the source image are ever looked at. That removes a lot of special-case
@@ -70,35 +70,42 @@ static void scale( int w, int h, int w2, int h2, uint16_t *dp, uint16_t *dp2 )
 	int c = (int) x;
 	double dx = x - c;
 	for( int dc = -1; dc <= 2; ++dc )
-	    RX[c2*4+dc+1] = R(dc-dx);
+	    RX[c2*4+1+dc] = R(dc-dx);
     }
 	
     for( int r2 = 0; r2 < h2; ++r2 ) {
 	double y = r2 / scaleY + 1;
 	int r = (int) y;
 
-	double dy = y - r, RY2[4];
-	RY2[0] = R(-1 - dy); RY2[1] = R(0 - dy);
-	RY2[2] = R(1 - dy);  RY2[3] = R(2 - dy);
+	double dy = y - r;
+	double RY0 = R(-1 - dy), RY1 = R(0 - dy);
+	double RY2 = R(1 - dy),  RY3 = R(2 - dy);
 
 	int i = (r - 1) * w - 1;
+	double *rxp = RX;
 	for( int c2 = 0; c2 < w2; ++c2 ) {
 	    double x = c2 / scaleX + 1;
 	    int c = (int) x;
-	    int j = i + c;
+
+	    uint16_t *dp0 = dp + i + c, *dp1 = dp0 + w;
+	    uint16_t *dp2 = dp1 + w,    *dp3 = dp2 + w;
+
 	    double f = 0.5;
-	    for( int dc = -1; dc <= 2; ++dc ) {
-		f += RX[c2*4+dc+1]
-		   * (  dp[j]     * RY2[0]  +  dp[j+w]   * RY2[1]
-		      + dp[j+2*w] * RY2[2]  +  dp[j+3*w] * RY2[3]);
-		++j;
-	    }
+	    f += *rxp++
+	       * (*dp0++ * RY0 + *dp1++ * RY1 + *dp2++ * RY2 + *dp3++ * RY3);
+	    f += *rxp++
+	       * (*dp0++ * RY0 + *dp1++ * RY1 + *dp2++ * RY2 + *dp3++ * RY3);
+	    f += *rxp++
+	       * (*dp0++ * RY0 + *dp1++ * RY1 + *dp2++ * RY2 + *dp3++ * RY3);
+	    f += *rxp++
+	       * (*dp0   * RY0 + *dp1   * RY1 + *dp2   * RY2 + *dp3   * RY3);
+
 	    if( f < 0 )
-		*dp2++ = 0;
+		*dpout++ = 0;
 	    else if( f > 65535 )
-		*dp2++ = 65535;
+		*dpout++ = 65535;
 	    else
-		*dp2++ = (uint16_t) f;
+		*dpout++ = (uint16_t) f;
 	}
     }
 
