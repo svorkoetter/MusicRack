@@ -21,6 +21,10 @@
 #define __MUSIC_RACK_MUPREP_CONVOLUTION_H__
 
 /* Apply a 3x3 convolution mask to a greyscale image, returning a new image. */
-extern uint16_t *Convolve3x3( uint16_t *data, int wData, int hData, int *mask );
+extern uint16_t *Convolve3( uint16_t *data, int wData, int hData,
+			    int centre, int edge, int corner );
+
+/* Specific faster convolution to sharpen an image. */
+extern uint16_t *Sharpen( uint16_t *data, int wData, int hData );
 
 #endif

@@ -26,14 +26,19 @@
 #include "convolution.h"
 #include "error.h"
 
-uint16_t *Convolve3x3( uint16_t *data, int wData, int hData, int *mask )
+#ifdef SHARPEN
+uint16_t *Sharpen( uint16_t *data, int wData, int hData )
+#else
+uint16_t *Convolve3( uint16_t *data, int wData, int hData,
+		     int centre, int edge, int corner )
+#endif
 {
+#ifndef SHARPEN
     /* Compute weight of convolution mask. */
-    int maskWeight = 0;
-    for( int i = 0; i < 9; ++i )
-	maskWeight += mask[i];
+    int maskWeight = centre + 4 * (edge + corner);
     if( maskWeight == 0 )
         maskWeight = 1;
+#endif
 
     uint16_t *res = (uint16_t *) malloc(wData * hData * sizeof(uint16_t));
     if( res == NULL )
@@ -48,7 +53,7 @@ uint16_t *Convolve3x3( uint16_t *data, int wData, int hData, int *mask )
 	op += wData;
 	ip += wData;
     }
-    /* ... then the top and bottom edges. */
+    /* ... then the top and bottom edges. The corners get copied again. */
     ip = data + (hData - 1) * wData;
     op = res + (hData - 1) * wData;
     for( int c = 0; c < wData; ++c ) {
@@ -61,20 +66,39 @@ uint16_t *Convolve3x3( uint16_t *data, int wData, int hData, int *mask )
     op = res + wData;
     for( int r = 2; r < hData; ++r ) {
         for( int c = 2; c < wData; ++c ) {
-	    int f = ip0[0] * mask[0] + ip0[1] * mask[1] + ip0[2] * mask[2]
-	          + ip1[0] * mask[3] + ip1[1] * mask[4] + ip1[2] * mask[5]
-	          + ip2[0] * mask[6] + ip2[1] * mask[7] + ip2[2] * mask[8];
+#ifdef SHARPEN
+	    /* Mask weight is 32, so we can normalize by shifting right 5. */
+	    int f = 44 * ip1[1]
+	          - (ip0[1] + ip1[0] + ip1[2] + ip2[1])
+	          - 2 * (ip0[0] + ip0[2] + ip2[0] + ip2[2]);
+#else
+	    int f = corner * (ip0[0] + ip0[2] + ip2[0] + ip2[2])
+	          + edge   * (ip0[1] + ip1[0] + ip1[2] + ip2[1])
+		  + centre * ip1[1];
+#endif
 	    ++ip0; ++ip1; ++ip2;
 	    if( f < 0 )
 		*++op = 0;
+#ifdef SHARPEN
+	    else if( (f >>= 5) <= 65535 )
+#else
 	    else if( (f /= maskWeight) <= 65535 )
+#endif
 		*++op = f;
 	    else
 		*++op = 65535;
 	}
+	/* Skip edges. */
 	ip0 += 2; ip1 += 2; ip2 += 2;
 	op += 2;
     }
 
     return( res );
 }
+
+/* Include self to generate a sharpening-specific version of Convolve without
+   having to duplicate all the code. */
+#ifndef SHARPEN
+# define SHARPEN
+# include "convolution.c"
+#endif

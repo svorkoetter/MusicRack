@@ -273,8 +273,7 @@ int main( int argc, const char **argv )
     }
 
     /* Apply a little bit of sharpening after scaling. */
-    int sharpen[9] = { -1, -2, -1, -2, 40, -2, -1, -2, -1 };
-    img2_16 = Convolve3x3(img16,w,h,sharpen);
+    img2_16 = Sharpen(img16,w,h);
     free(img16);
     img16 = img2_16;
 
