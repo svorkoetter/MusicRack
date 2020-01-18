@@ -54,23 +54,30 @@ static int generateWeights( int lIn, int lOut,
 	}
 	int ii1R = floor(i1R);
 
-	/* Partial left pixel. */
 	int w = 0;
-	indices[offset + w] = ii1L;
-	weights[offset + w] = (ii1L + 1 - i1L) * invScale;
-	++w;
-
-	/* Full intermediate pixels. */
-	for( int c = ii1L + 1; c < ii1R; ++c ) {
-	    indices[offset + w] = c;
-	    weights[offset + w] = invScale;
+	if( ii1L == ii1R ) {
+	    indices[offset + w] = ii1L;
+	    weights[offset + w] = 1.0;
 	    ++w;
 	}
+	else {
+	    /* Partial left pixel. */
+	    indices[offset + w] = ii1L;
+	    weights[offset + w] = (ii1L + 1 - i1L) * invScale;
+	    ++w;
 
-	/* Partial right pixel. */
-	indices[offset + w] = ii1R;
-	weights[offset + w] = (i1R - ii1R) * invScale;
-	++w;
+	    /* Full intermediate pixels. */
+	    for( int c = ii1L + 1; c < ii1R; ++c ) {
+		indices[offset + w] = c;
+		weights[offset + w] = invScale;
+		++w;
+	    }
+
+	    /* Partial right pixel. */
+	    indices[offset + w] = ii1R;
+	    weights[offset + w] = (i1R - ii1R) * invScale;
+	    ++w;
+	}
 
 	/* Unused weights and indices. Use last valid index and zero weight. */
 	while( w < nWeights ) {
