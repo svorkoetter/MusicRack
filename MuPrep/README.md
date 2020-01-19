@@ -59,8 +59,7 @@ images:
   linear intensity before performing any spatial transformations (see
   <http://ericbrasseur.org/gamma.html> for the reasons).
 * If the image was skewed by more than one pixel in its final intended size,
-  rotates it appropriately. After rotation the image was rotated in the
-  previous step, it is retrimmed and/or padded.
+  rotates it appropriately. After rotation, it is retrimmed and/or padded.
 * Scales the image to fit within the specified geometry, and applies a bit of
   sharpening.
 * Converts from 16-bit linear back to 8-bit gamma corrected intensity.
